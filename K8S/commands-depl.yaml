@@ -1,0 +1,35 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: commands-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: commands-service
+  template:
+    metadata:
+      labels:
+        app: commands-service
+    spec:
+      containers:
+        - name: commands-service
+          image: eyndrahena/commands-service:latest
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: commands-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: commands-service
+  ports:
+    - name: commands-service
+      protocol: TCP
+      port: 80
+      targetPort: 80
+
+# kubectl apply -f .\commands-depl.yaml
