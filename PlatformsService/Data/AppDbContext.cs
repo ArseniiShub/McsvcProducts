@@ -1,4 +1,4 @@
-﻿namespace PlatformService.Data;
+﻿namespace PlatformsService.Data;
 
 public class AppDbContext : DbContext
 {

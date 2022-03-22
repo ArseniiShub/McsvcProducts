@@ -6,14 +6,30 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: platform-service
+      app: platforms-service
   template:
     metadata:
       labels:
-        app: platform-service
+        app: platforms-service
     spec:
       containers:
-        - name: platform-service
-          image: eyndrahena/platform-service:latest
+        - name: platforms-service
+          image: eyndrahena/platforms-service:latest
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: platforms-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: platforms-service
+  ports:
+    - name: platforms-service
+      protocol: TCP
+      port: 80
+      targetPort: 80
 
 # kubectl apply -f .\platforms-depl.yaml

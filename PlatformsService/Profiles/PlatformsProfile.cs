@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using PlatformService.Dtos;
+using PlatformsService.Dtos;
 
-namespace PlatformService.Profiles;
+namespace PlatformsService.Profiles;
 
 public class PlatformsProfile : Profile
 {

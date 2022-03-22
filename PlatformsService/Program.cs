@@ -1,6 +1,7 @@
-global using PlatformService.Models;
-global using PlatformService.Data;
+global using PlatformsService.Models;
+global using PlatformsService.Data;
 global using Microsoft.EntityFrameworkCore;
+using PlatformsService.SyncDataServices.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("InMem"));
 
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
+builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
 builder.Services.AddSingleton<PrepDb>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

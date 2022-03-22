@@ -1,22 +1,26 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PlatformService.Dtos;
+using PlatformsService.Dtos;
+using PlatformsService.SyncDataServices.Http;
 
-namespace PlatformService.Controllers;
+namespace PlatformsService.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/p/[controller]")]
 [ApiController]
 public class PlatformsController : ControllerBase
 {
 	private readonly ILogger<PlatformsController> _logger;
 	private readonly IPlatformRepo _repository;
 	private readonly IMapper _mapper;
+	private readonly ICommandDataClient _commandDataClient;
 
-	public PlatformsController(ILogger<PlatformsController> logger, IPlatformRepo repository, IMapper mapper)
+	public PlatformsController(ILogger<PlatformsController> logger, IPlatformRepo repository, IMapper mapper,
+		ICommandDataClient commandDataClient)
 	{
 		_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		_repository = repository ?? throw new ArgumentNullException(nameof(repository));
 		_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+		_commandDataClient = commandDataClient ?? throw new ArgumentNullException(nameof(commandDataClient));
 	}
 
 	[HttpGet]
@@ -43,7 +47,7 @@ public class PlatformsController : ControllerBase
 	}
 
 	[HttpPost]
-	public ActionResult<PlatformReadDto> CreatePlatform(PlatformCreateDto platformCreateDto)
+	public async Task<ActionResult<PlatformReadDto>> CreatePlatform(PlatformCreateDto platformCreateDto)
 	{
 		_logger.LogInformation(">--- Creating new Platform");
 
@@ -52,6 +56,16 @@ public class PlatformsController : ControllerBase
 		_repository.SaveChanges();
 
 		var platformReadDto = _mapper.Map<PlatformReadDto>(platform);
+
+		try
+		{
+			await _commandDataClient.SendPlatformToCommandAsync(platformReadDto);
+		}
+		catch(Exception e)
+		{
+			_logger.LogError(e, ">--- Could not send synchronously");
+		}
+
 		return CreatedAtAction(nameof(GetPlatformById), new { platformReadDto.Id }, platformReadDto);
 	}
 }

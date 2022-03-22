@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "CommandService": {
+    "CommandsService": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

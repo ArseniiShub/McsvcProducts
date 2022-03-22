@@ -1,4 +1,4 @@
-﻿namespace PlatformService.Data;
+﻿namespace PlatformsService.Data;
 
 //TODO For testing. Remove later
 public class PrepDb

@@ -1,4 +1,4 @@
-﻿namespace PlatformService.Models;
+﻿namespace PlatformsService.Models;
 
 public class Platform
 {
