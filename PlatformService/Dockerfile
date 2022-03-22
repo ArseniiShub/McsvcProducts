@@ -19,5 +19,6 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "PlatformService.dll"]
 
-# docker build -f PlatformService\Dockerfile -t eyndrahena/platform_service .
-# docker run -p 8080:80 -d eyndrahena/platform_service
+# docker build -f PlatformService\Dockerfile -t eyndrahena/platform-service .
+# docker run -p 8080:80 -d eyndrahena/platform-service
+# docker push eyndrahena/platform-service
