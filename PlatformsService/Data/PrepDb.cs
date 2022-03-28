@@ -1,6 +1,5 @@
 ﻿namespace PlatformsService.Data;
 
-//TODO For testing. Remove later
 public class PrepDb
 {
 	private readonly ILogger<PrepDb> _logger;
@@ -9,7 +8,7 @@ public class PrepDb
 	{
 		_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 	}
-	public void PrepPopulations(IApplicationBuilder app)
+	public void PrepPopulations(IApplicationBuilder app, bool isProduction)
 	{
 		using var serviceScope = app.ApplicationServices.CreateScope();
 		using var appDbContext = serviceScope.ServiceProvider.GetService<AppDbContext>();
@@ -19,11 +18,24 @@ public class PrepDb
 			throw new InvalidOperationException("Unable to get AppDbContext service");
 		}
 
-		SeedData(appDbContext);
+		SeedData(appDbContext, isProduction);
 	}
 
-	private void SeedData(AppDbContext context)
+	private void SeedData(AppDbContext context, bool isProduction)
 	{
+		if(isProduction)
+		{
+			_logger.LogInformation("Attempt to apply migrations");
+			try
+			{
+				context.Database.Migrate();
+			}
+			catch(Exception e)
+			{
+				_logger.LogError("Could not run migrations", e);
+			}
+		}
+
 		if(context.Platforms.Any())
 		{
 			_logger.LogInformation("Data is already there. Skipping data creation");
