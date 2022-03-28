@@ -9,8 +9,8 @@ namespace CommandsService.Controllers;
 public class PlatformsController : ControllerBase
 {
 	private readonly ILogger<PlatformsController> _logger;
-	private readonly ICommandRepo _repository;
 	private readonly IMapper _mapper;
+	private readonly ICommandRepo _repository;
 
 	public PlatformsController(ILogger<PlatformsController> logger, ICommandRepo repository, IMapper mapper)
 	{

@@ -6,11 +6,12 @@ namespace PlatformsService.SyncDataServices.Http;
 
 public class HttpCommandDataClient : ICommandDataClient
 {
-	private readonly ILogger<HttpCommandDataClient> _logger;
-	private readonly HttpClient _httpClient;
 	private readonly IConfiguration _configuration;
+	private readonly HttpClient _httpClient;
+	private readonly ILogger<HttpCommandDataClient> _logger;
 
-	public HttpCommandDataClient(ILogger<HttpCommandDataClient> logger, HttpClient httpClient, IConfiguration configuration)
+	public HttpCommandDataClient(ILogger<HttpCommandDataClient> logger, HttpClient httpClient,
+		IConfiguration configuration)
 	{
 		_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		_httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));

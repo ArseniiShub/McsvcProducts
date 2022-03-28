@@ -9,10 +9,10 @@ namespace PlatformsService.Controllers;
 [ApiController]
 public class PlatformsController : ControllerBase
 {
-	private readonly ILogger<PlatformsController> _logger;
-	private readonly IPlatformRepo _repository;
-	private readonly IMapper _mapper;
 	private readonly ICommandDataClient _commandDataClient;
+	private readonly ILogger<PlatformsController> _logger;
+	private readonly IMapper _mapper;
+	private readonly IPlatformRepo _repository;
 
 	public PlatformsController(ILogger<PlatformsController> logger, IPlatformRepo repository, IMapper mapper,
 		ICommandDataClient commandDataClient)

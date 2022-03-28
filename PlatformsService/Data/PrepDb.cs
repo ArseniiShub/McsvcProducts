@@ -8,6 +8,7 @@ public class PrepDb
 	{
 		_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 	}
+
 	public void PrepPopulations(IApplicationBuilder app, bool isProduction)
 	{
 		using var serviceScope = app.ApplicationServices.CreateScope();
