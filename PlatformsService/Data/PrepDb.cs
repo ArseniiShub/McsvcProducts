@@ -33,7 +33,7 @@ public class PrepDb
 			}
 			catch(Exception e)
 			{
-				_logger.LogError("Could not run migrations", e);
+				_logger.LogError(e, "Could not run migrations");
 			}
 		}
 

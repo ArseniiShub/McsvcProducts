@@ -30,7 +30,7 @@ public class CommandsController : ControllerBase
 		}
 
 		var commands = _repository.GetCommandsForPlatform(platformId);
-		return Ok(_mapper.Map<CommandReadDto>(commands));
+		return Ok(_mapper.Map<IEnumerable<CommandReadDto>>(commands));
 	}
 
 	[HttpGet("{commandId}")]

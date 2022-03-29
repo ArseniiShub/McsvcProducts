@@ -27,4 +27,12 @@ public class PlatformsController : ControllerBase
 		var platforms = _repository.GetAllPlatforms();
 		return Ok(_mapper.Map<IEnumerable<PlatformReadDto>>(platforms));
 	}
+
+	[HttpPost]
+	public ActionResult TestInboundConnection()
+	{
+		Console.WriteLine("--> Inbound POST # Command Service");
+
+		return Ok("Inbound test of from Platforms Service");
+	}
 }
