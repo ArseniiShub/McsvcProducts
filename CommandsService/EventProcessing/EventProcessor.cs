@@ -12,8 +12,8 @@ public class EventProcessor : IEventProcessor
 
 	public EventProcessor(IServiceScopeFactory scopeFactory, IMapper mapper, ILogger<EventProcessor> logger)
 	{
-		_scopeFactory = scopeFactory;
-		_mapper = mapper;
+		_scopeFactory = scopeFactory ?? throw new ArgumentNullException(nameof(scopeFactory));
+		_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 		_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 	}
 

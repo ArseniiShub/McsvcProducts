@@ -2,6 +2,7 @@ global using PlatformsService.Models;
 global using PlatformsService.Data;
 global using Microsoft.EntityFrameworkCore;
 using PlatformsService.AsyncDataServices;
+using PlatformsService.SyncDataServices.Grpc;
 using PlatformsService.SyncDataServices.Http;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +32,7 @@ else
 	);
 }
 
+builder.Services.AddGrpc();
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
 builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
 builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
@@ -53,6 +55,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGrpcService<GrpcPlatformsService>();
+app.MapGet("/protos/platforms.proto",
+	async context => await context.Response.WriteAsync(File.ReadAllText("Protos/platforms.proto")));
 
 var prep = app.Services.GetService<PrepDb>();
 prep!.PrepPopulations(app, app.Environment.IsProduction());
