@@ -60,6 +60,6 @@ app.MapGet("/protos/platforms.proto",
 	async context => await context.Response.WriteAsync(File.ReadAllText("Protos/platforms.proto")));
 
 var prep = app.Services.GetService<PrepDb>();
-prep!.PrepPopulations(app, app.Environment.IsProduction());
+prep!.PrepPopulation(app, app.Environment.IsProduction());
 
 app.Run();
